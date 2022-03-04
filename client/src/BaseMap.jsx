@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffec, useState } from "react";
 import ReactMapGL, { Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Pin from "./componants/Pin";
