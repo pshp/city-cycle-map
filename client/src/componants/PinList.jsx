@@ -1,7 +1,6 @@
 import { getPins } from "../services/api-service";
 
-import React, { useRef, useEffect, useState } from "react";
-import { Marker } from "react-map-gl";
+import React, { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Pin from "./Pin";
 

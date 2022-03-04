@@ -1,7 +1,7 @@
 import * as React from "react";
-import Map, { Popup } from "react-map-gl";
+import { Popup } from "react-map-gl";
 import StarIcon from "@mui/icons-material/Star";
-import "./Box.css";
+import "./InfoBox.css";
 
 const InfoBox = () => {
   const [showPopup, setShowPopup] = React.useState(true);

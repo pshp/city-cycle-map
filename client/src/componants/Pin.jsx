@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 import { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import RoomIcon from "@mui/icons-material/Room";
