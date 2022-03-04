@@ -10,15 +10,16 @@ const BaseMap = () => {
   const [pinList, setPinList] = useState([]);
 
   useEffect(() => {
-    getPins().then((pins) => setPinList(pins));
-  });
+    getPins()
+      .then(pins => setPinList(pins))
+      .catch(e => console.log(e))
+  },[]);
 
   const allPins = pinList.map(singlePin => {
     return (
-      <div key={pin._id}>
+      <React.Fragment key={pin._id}>
         <Pin data={singlePin}/>
-      </div>
-
+      </React.Fragment>
     )
   })
 
