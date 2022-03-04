@@ -1,16 +1,14 @@
-const baseUrl = 'http://localhost:3001/tasks/';
-const headers = { "Content-Type": "application/json"};
+const baseUrl = "http://localhost:3001/";
+const headers = { "Content-Type": "application/json" };
 
 export const getPins = async () => {
-  return fetch(baseUrl, {
-    method:"GET",
+  return fetch("http://localhost:3001/pins", {
+    method: "GET",
     headers: headers,
-  }).then(
-    res => res.json()
-  ).catch(
-    (error) => console.log(error)
-  );
-}
+  })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
 
 // export const postTask = async (data) => {
 //   return fetch(baseUrl, {

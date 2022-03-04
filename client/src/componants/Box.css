@@ -1,25 +1,25 @@
 .card {
- display:flex;
- width:fit-content;
- max-width:200px;
- height:fit-content;
- flex-direction: column;
- justify-content: space-around;
- align-items: flex-start;
+  display: flex;
+  width: fit-content;
+  max-width: 200px;
+  height: fit-content;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 label {
   width: fit-content;
-  color:teal;
-  font-size:13px;
-  border-bottom:0.5px solid teal;
+  color: teal;
+  font-size: 13px;
+  border-bottom: 0.5px solid teal;
   margin: 3px 0;
 }
 
-.star{
-  color:gold;
+.star {
+  color: gold;
 }
 
-.date{
+.date {
   font-size: 11px;
 }

@@ -3,17 +3,16 @@ import { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import RoomIcon from "@mui/icons-material/Room";
 
-const Pin = () => {
-
+const Pin = ({ data }) => {
   return (
     <>
       <Marker
-        longitude={13.405}
-        latitude={52.52}
+        longitude={data.longitude}
+        latitude={data.latitude}
         anchor="bottom"
         draggable="true"
       >
-        <RoomIcon style={{color:"slateblue", fontSize:50}}/>
+        <RoomIcon style={{ color: "slateblue", fontSize: 50 }} />
       </Marker>
     </>
   );

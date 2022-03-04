@@ -3,7 +3,7 @@ import Map, { Popup } from "react-map-gl";
 import StarIcon from "@mui/icons-material/Star";
 import "./Box.css";
 
-const Box = () => {
+const InfoBox = () => {
   const [showPopup, setShowPopup] = React.useState(true);
 
   return (
@@ -22,14 +22,16 @@ const Box = () => {
             <p>my home :)</p>
             <label>Rating</label>
             <div>
-              <StarIcon className="star"/>
-              <StarIcon className="star"/>
-              <StarIcon className="star"/>
-              <StarIcon className="star"/>
-              <StarIcon className="star"/>
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+              <StarIcon className="star" />
             </div>
             <label>Info</label>
-            <span className="username">Created by <b>Peter</b></span>
+            <span className="username">
+              Created by <b>Peter</b>
+            </span>
             <span className="date">1 hour ago</span>
           </div>
         </Popup>
@@ -38,4 +40,4 @@ const Box = () => {
   );
 };
 
-export default Box;
+export default InfoBox;
