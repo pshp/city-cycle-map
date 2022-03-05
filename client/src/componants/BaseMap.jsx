@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import ReactMapGL from "react-map-gl";
-import PinList from "./componants/PinList";
+import React, { useEffect, useState, useRef } from "react";
+import ReactMapGL, { useMap } from "react-map-gl";
+import PinList from "./PinList";
 import "./BaseMap.css";
-import { getPins, postPin } from "./services/api-service";
+import { getPins, postPin } from "../services/api-service";
 
 const BaseMap = () => {
+  const { myMap } = useMap();
+
   const initialZoom = 11;
   const [zoom, setZoom] = useState(initialZoom);
   const [pinArray, setPinArray] = useState([]);
@@ -36,11 +38,14 @@ const BaseMap = () => {
         setPinArray((currPins) => [...currPins, pin]);
       })
       .catch((e) => console.log(e));
+    console.log(myMap);
+    myMap.flyTo({ center: [lng, lat] });
   };
 
   return (
     <div className="map">
       <ReactMapGL
+        id="myMap"
         initialViewState={{
           longitude: 13.405,
           latitude: 52.52,

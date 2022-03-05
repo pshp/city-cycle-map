@@ -1,12 +1,16 @@
 import React from "react";
 import "./App.css";
-import BaseMap from "./BaseMap";
+import BaseMap from "./componants/BaseMap";
+import {MapProvider} from 'react-map-gl';
 
 const App = () => {
   return (
     <div className="App">
-      <BaseMap></BaseMap>
+    <MapProvider>
+        <BaseMap/>
+    </MapProvider>
     </div>
+
   );
 };
 
