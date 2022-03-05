@@ -3,8 +3,9 @@ import { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Room from "@mui/icons-material/Room";
 import InfoBox from "./InfoBox";
+import StarIcon from "@mui/icons-material/Star";
+import { Popup } from "react-map-gl";
 
-const size = 20;
 
 const Pin = ({ data, zoom }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -20,7 +21,7 @@ const Pin = ({ data, zoom }) => {
         latitude={data.latitude}
         anchor="bottom"
         draggable="true"
-        offset={[0,0.6*zoom]}
+        offset={[0,0.8*zoom]}
 
         onClick={() => {
           handleClick();
@@ -28,12 +29,41 @@ const Pin = ({ data, zoom }) => {
       >
         <Room style={{
            color: "slateblue",
-           height: size,
-
+          fontSize: 30
            }} />
       </Marker>
       {showPopup && (
-        <InfoBox data={data}/>
+        <Popup
+        longitude={data.longitude}
+        latitude={data.latitude}
+        anchor="left"
+        closeOnClick={false}
+        offset={[9,-8]}
+
+        onClose={() => {
+          handleClick();
+        }}
+      >
+        <div className="card">
+          <label>Place</label>
+          <h4 className="title">{data.title}</h4>
+          <label>Review</label>
+          <p>{data.description}</p>
+          <label>Rating</label>
+          <div>
+            <StarIcon className="star" />
+            <StarIcon className="star" />
+            <StarIcon className="star" />
+            <StarIcon className="star" />
+            <StarIcon className="star" />
+          </div>
+          <label>Info</label>
+          <span className="username">
+            Created by <b>{data.username}</b>
+          </span>
+          <span className="date">1 hour ago</span>
+        </div>
+      </Popup>
       )}
     </div>
   );
