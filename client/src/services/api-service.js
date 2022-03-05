@@ -2,7 +2,7 @@ const baseUrl = "http://localhost:3001/";
 const headers = { "Content-Type": "application/json" };
 
 export const getPins = async () => {
-  return fetch("http://localhost:3001/pins", {
+  return fetch(baseUrl + "pins", {
     method: "GET",
     headers: headers,
   })
@@ -10,17 +10,15 @@ export const getPins = async () => {
     .catch((error) => console.log(error));
 };
 
-// export const postTask = async (data) => {
-//   return fetch(baseUrl, {
-//     method:"POST",
-//     headers: headers,
-//     body: JSON.stringify(data)
-//   }).then(
-//     res => res.json()
-//   ).catch(
-//     (error) => console.log(error)
-//   );
-// }
+export const postPin = async (data) => {
+  return fetch(baseUrl + "pins", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
 
 // export const updateTitle = async (id, title) => {
 //   return fetch(baseUrl+id+'/title/', {
