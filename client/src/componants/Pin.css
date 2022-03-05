@@ -27,3 +27,8 @@ label {
   font-size: 11px;
 }
 
+.closeButton {
+  margin-left: auto;
+  cursor: pointer;
+}
+
