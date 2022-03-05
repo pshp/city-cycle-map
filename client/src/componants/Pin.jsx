@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import RoomIcon from "@mui/icons-material/Room";
+import Room from "@mui/icons-material/Room";
+import InfoBox from "./InfoBox";
 
-const Pin = ({ data }) => {
+const size = 20;
+
+const Pin = ({ data, zoom }) => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClick = () => {
+    setShowPopup(!showPopup);
+  }
+
   return (
-    <>
+    <div>
       <Marker
         longitude={data.longitude}
         latitude={data.latitude}
         anchor="bottom"
         draggable="true"
+        offset={[0,0.6*zoom]}
+
+        onClick={() => {
+          handleClick();
+        }}
       >
-        <RoomIcon style={{ color: "slateblue", fontSize: 50 }} />
+        <Room style={{
+           color: "slateblue",
+           height: size,
+
+           }} />
       </Marker>
-    </>
+      {showPopup && (
+        <InfoBox data={data}/>
+      )}
+    </div>
   );
 };
 

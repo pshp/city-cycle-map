@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ReactMapGL from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 import PinList from "./componants/PinList";
-import InfoBox from "./componants/InfoBox";
+import "./BaseMap.css";
 
 const BaseMap = () => {
+  const [zoom, setZoom] = useState(null);
+
+
+  const onMapLoad = (e) => {
+    setZoom(e);
+  };
+
   return (
-    <div className="Map">
+    <div className="map">
       <ReactMapGL
         initialViewState={{
           longitude: 13.405,
@@ -16,9 +22,10 @@ const BaseMap = () => {
         style={{ width: "100vw", height: "100vh" }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
+        onZoom={ el => onMapLoad(el.viewState.zoom) }
+
       >
-        <PinList />
-        <InfoBox />
+        <PinList zoom={zoom} />
       </ReactMapGL>
     </div>
   );

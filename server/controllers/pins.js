@@ -18,6 +18,8 @@ const postPin = async (req, res) => {
       title: req.body.title,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
+      description : req.body.description,
+      rating : req.body.rating,
     };
     const response = await Pin.create(body);
     res.status(201).send(response);
@@ -37,7 +39,7 @@ const deletePin = async (req, res) => {
   }
 };
 
-const deleteAllPins = async () => {
+const deleteAllPins = async (req, res) => {
   try {
     // delete all pins
     const result = await Pin.deleteMany({});
