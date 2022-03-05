@@ -4,6 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Room from "@mui/icons-material/Room";
 import StarIcon from "@mui/icons-material/Star";
 import { Popup } from "react-map-gl";
+import "./Pin.css";
 
 const Pin = ({ data, zoom }) => {
   const [showPopup, setShowPopup] = useState(false);
