@@ -18,12 +18,33 @@ const postPin = async (req, res) => {
       title: req.body.title,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      description : req.body.description,
-      rating : req.body.rating,
+      description: req.body.description,
+      rating: req.body.rating,
     };
     const response = await Pin.create(body);
     res.status(201).send(response);
   } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
+const editPin = async (req, res) => {
+  try {
+    // edit single pin using _id
+    const filter = { _id: req.params.id };
+    const update = {
+      title: req.body.title,
+      description: req.body.description,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+    };
+    const result = await Pin.findOneAndUpdate(filter, update, {
+      runValidators: true,
+      new: true,
+    });
+    res.status(200).send(result);
+  } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 };
@@ -49,4 +70,4 @@ const deleteAllPins = async (req, res) => {
   }
 };
 
-module.exports = { getPins, postPin, deletePin, deleteAllPins };
+module.exports = { getPins, postPin, editPin, deletePin, deleteAllPins };
