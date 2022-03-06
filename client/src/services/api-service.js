@@ -43,16 +43,13 @@ export const editPin = async (id, data) => {
   );
 }
 
-// export const updateStatus = async (id, status) => {
-//   return fetch(baseUrl+id+'/status/', {
-//     method:"PATCH",
-//     headers: headers,
-//     body: JSON.stringify({status: status})
-//   }).then(
-//     res => res.json()
-//   ).catch(
-//     (error) => console.log(error)
-//   );
-// }
+export const newUser = async (data) => {
+  return fetch(baseUrl + "users", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+};
 
 

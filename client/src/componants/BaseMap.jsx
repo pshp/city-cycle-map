@@ -10,10 +10,12 @@ import { getPins, postPin, editPin, deletePin } from "../services/api-service";
 import { MyContext } from "../context";
 import "./Pin.css";
 import UserButtons from "./UserButtons";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
+import Register from "./account/Register";
 
 const BaseMap = () => {
   const { myMap } = useMap();
-
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentPinId, setCurrentPinId] = useState(0);
   const initialZoom = 11;
   const [zoom, setZoom] = useState(initialZoom);
@@ -22,6 +24,8 @@ const BaseMap = () => {
   const [editPlace, setEditPlace] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [showRegister, setShowRegister] = useState(true);
+  const [showLogIn, setShowLogIn] = useState(true);
 
   useEffect(() => {
     getPins()
@@ -70,6 +74,13 @@ const BaseMap = () => {
   };
 
   const handleClickEdit = () => {
+    setEditPlace(true);
+  };
+
+  const handleRegister = () => {
+    showRegister(false);
+  };
+  const handleClose = () => {
     setEditPlace(true);
   };
 
@@ -164,11 +175,11 @@ const BaseMap = () => {
         desc,
         handleDescChange,
         handleTitleChange,
+        showRegister,
+        showLogIn,
       }}
     >
-      <>
-        <UserButtons />
-      </>
+
       <div className="map">
         <ReactMapGL
           id="myMap"
@@ -189,6 +200,10 @@ const BaseMap = () => {
           <PinList pinArray={pinArray} />
           <ScaleControl />
           <NavigationControl />
+          <UserButtons />
+          {showRegister &&
+           <Register/>
+          }
         </ReactMapGL>
       </div>
     </MyContext.Provider>
