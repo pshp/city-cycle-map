@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactMapGL, { useMap } from "react-map-gl";
 import PinList from "./PinList";
 import "./BaseMap.css";
-import { getPins, postPin, deletePin } from "../services/api-service";
+import { getPins, postPin, editPin, deletePin } from "../services/api-service";
 import { MyContext } from "../context";
 import "./Pin.css";
 
@@ -14,6 +14,7 @@ const BaseMap = () => {
   const [zoom, setZoom] = useState(initialZoom);
   const [pinArray, setPinArray] = useState([]);
   const [newPlace, setNewPlace] = useState(null);
+  const [editPlace, setEditPlace] = useState(false);
 
   useEffect(() => {
     getPins()
@@ -23,16 +24,16 @@ const BaseMap = () => {
       .catch((e) => console.log(e));
   }, []);
 
-  const handleClose = () => {
-    setNewPlace(null);
-  };
-
   const onMapZoom = (el) => {
     setZoom(el.viewState.zoom);
   };
 
+  const handleEdit = () => {
+    setEditPlace(true);
+  };
+
   const handleDelete = () => {
-    console.log(currentPinId)
+    console.log(currentPinId);
     deletePin(currentPinId)
       .then(() => {
         const newPins = pinArray.filter((el) => el._id !== currentPinId);
@@ -51,11 +52,22 @@ const BaseMap = () => {
     });
   };
 
+  const handleClose = () => {
+    setNewPlace(null);
+    setEditPlace(false);
+    setCurrentPinId(null);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newPlace == null) {
-      return;
+      handleEditSubmit(e);
+    } else {
+      handleNewPinSubmit(e);
     }
+  };
+
+  const handleNewPinSubmit = (e) => {
     const newPin = {
       longitude: newPlace.lng,
       latitude: newPlace.lat,
@@ -74,11 +86,36 @@ const BaseMap = () => {
     setNewPlace(null);
   };
 
-  const closeInfoBox = () => {
-    setCurrentPinId(null);
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    console.log("edit started, id:", currentPinId);
+
+    const body = {
+      // longitude: newPlace.lng,
+      // latitude: newPlace.lat,
+      title: e.target.title.value,
+      description: e.target.description.value,
+    };
+
+    editPin(currentPinId, body)
+      .then((pin) => {
+        const newPins = pinArray.map((el) => {
+          if (el._id === currentPinId) {
+            el.title = e.target.title.value;
+            el.description = e.target.description.value;
+          }
+          return el;
+        });
+        setPinArray(newPins);
+        pinClick(pin._id);
+        setEditPlace(false);
+        //   console.log(pin);
+      })
+      .catch((e) => console.log(e));
   };
 
   const pinClick = (id) => {
+    setNewPlace(null);
     setCurrentPinId(id);
   };
 
@@ -95,10 +132,11 @@ const BaseMap = () => {
         newPlace,
         setNewPlace,
         panMap,
-        closeInfoBox,
         handleSubmit,
         handleClose,
         handleDelete,
+        handleEdit,
+        editPlace,
       }}
     >
       <div className="map">

@@ -7,15 +7,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { MyContext } from "../context";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import InfoBox from "./InfoBox";
+import EditInfoBox from "./EditInfoBox";
 
 const Pin = ({ data }) => {
-  const { handleDelete, currentPinId, pinClick, zoom, newPlace, panMap, closeInfoBox } =
-    useContext(MyContext);
+  const { currentPinId, pinClick, zoom, editPlace } = useContext(MyContext);
+  const lng = data.longitude;
+  const lat = data.latitude;
+
   return (
     <div>
       <Marker
-        longitude={data.longitude}
-        latitude={data.latitude}
+        longitude={lng}
+        latitude={lat}
         anchor="bottom"
         draggable="true"
         onClick={() => {
@@ -30,49 +34,14 @@ const Pin = ({ data }) => {
           }}
         />
       </Marker>
-      {newPlace == null && currentPinId == data._id && (
+      {!editPlace && currentPinId == data._id && (
         <>
-          <Popup
-            onOpen={() => panMap(data.longitude, data.latitude)}
-            longitude={data.longitude}
-            latitude={data.latitude}
-            anchor="left"
-            closeOnClick={false}
-            closeButton={false}
-            offset={[9, -8]}
-          >
-            <div className="card">
-              <div className="icon-buttons">
-                <EditIcon
-                  className="edit-button icon-button"
-                  onClick={() => {
-                    closeInfoBox();
-                  }}
-                />
-                <DeleteForeverIcon
-                  className="delete-button icon-button"
-                  onClick={() => {
-                    handleDelete();
-                  }}
-                />
-                <CloseIcon
-                  className="close-button icon-button"
-                  onClick={() => {
-                    closeInfoBox();
-                  }}
-                />
-              </div>
-              <label>Place</label>
-              <p className="title">{data.title}</p>
-              <label>Description</label>
-              <p className="desc">{data.description}</p>
-              <label>Info</label>
-              <p className="username">
-                Created by <b>{data.username}</b>
-              </p>
-              <p className="date">1 hour ago</p>
-            </div>
-          </Popup>
+          <InfoBox data={data} />
+        </>
+      )}
+      {editPlace && currentPinId == data._id && (
+        <>
+          <EditInfoBox lng={lng} lat={lat} />
         </>
       )}
     </div>

@@ -31,11 +31,11 @@ export const deletePin = async (id) => {
   );
 }
 
-export const updatePin = async (id, title, desc) => {
+export const editPin = async (id, data) => {
   return fetch(baseUrl + "pins/" + id, {
     method:"PATCH",
     headers: headers,
-    body: JSON.stringify({title: title, description: desc})
+    body: JSON.stringify(data)
   }).then(
     res => res.json()
   ).catch(
