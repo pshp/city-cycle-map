@@ -5,7 +5,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import { MyContext } from "../context";
 
 const EditInfoBox = ({ lat, lng }) => {
-  const { handleClose, handleSubmit, editPlace } = useContext(MyContext);
+  const {
+    handleClickClose,
+    handleSubmit,
+    editPlace,
+    handleDescChange,
+    handleTitleChange,
+    desc,
+    title,
+  } = useContext(MyContext);
 
   return (
     <>
@@ -17,7 +25,7 @@ const EditInfoBox = ({ lat, lng }) => {
         closeButton={false}
         offset={[9, -8]}
       >
-        <form className="submit-card" onSubmit={handleSubmit}>
+        <form className="submit-card" onSubmit={(e) => handleSubmit(e)}>
           {/* <div>
             <Room style={{ color: "violet", fontSize: 20 }} />
             <Room style={{ color: "indigo", fontSize: 20 }} />
@@ -29,15 +37,23 @@ const EditInfoBox = ({ lat, lng }) => {
           <CloseIcon
             className="icon-buttons icon-button close-button"
             onClick={() => {
-              handleClose();
+              handleClickClose();
             }}
           />
           <label>Title</label>
-          <input name="title" placeholder="Enter a title" autoFocus />
+          <input
+            name="title"
+            placeholder="Enter a title"
+            value={title}
+            autoFocus
+            onChange={(e) => handleTitleChange(e.target.value)}
+          />
           <label>Description</label>
           <textarea
             name="description"
             placeholder="Say us something about this place."
+            value={desc}
+            onChange={(e) => handleDescChange(e.target.value)}
           />
           <button type="submit" className="submitButton">
             {editPlace && "Save Changes"}

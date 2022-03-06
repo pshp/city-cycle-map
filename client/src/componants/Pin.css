@@ -6,28 +6,26 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
 }
 
 .title {
-  font-size:14px;
-  margin:7px 0;
-  font-weight:bold;
+  font-size: 14px;
+  margin: 7px 0;
+  font-weight: bold;
 }
 
 .desc {
-  font-size:14px;
-  margin:7px 0;
+  font-size: 14px;
+  margin: 7px 0;
 }
 
 .username {
-  font-size:12px;
+  font-size: 12px;
   margin: 5px 0 0 0;
-
 }
 
-.date{
-  font-size:11px;
+.date {
+  font-size: 11px;
   margin: 0;
 }
 
@@ -46,9 +44,6 @@ label {
   border-bottom: 0.5px solid tomato;
   margin: 0;
 }
-
-
-
 
 input {
   border: none;
@@ -87,14 +82,11 @@ textarea {
 }
 
 .edit-button {
-
 }
 
 .delete-button {
-
 }
 .close-button {
-
 }
 .submitButton {
   cursor: pointer;
@@ -111,11 +103,9 @@ textarea {
   text-align: center;
   margin: 0 auto;
   transition: all 0.2s;
-  border:0;
-  margin-top:10px;
+  border: 0;
+  margin-top: 10px;
 }
-
-
 
 .submitButton:hover {
   opacity: 0.5;

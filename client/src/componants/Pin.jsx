@@ -1,12 +1,8 @@
 import React, { useContext } from "react";
 import { Marker } from "react-map-gl";
 import Room from "@mui/icons-material/Room";
-import { Popup } from "react-map-gl";
 import "./Pin.css";
-import CloseIcon from "@mui/icons-material/Close";
-import EditIcon from "@mui/icons-material/Edit";
 import { MyContext } from "../context";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import InfoBox from "./InfoBox";
 import EditInfoBox from "./EditInfoBox";
 

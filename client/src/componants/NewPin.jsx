@@ -1,15 +1,12 @@
 import React, { useContext } from "react";
 import { Marker } from "react-map-gl";
 import Room from "@mui/icons-material/Room";
-import { Popup } from "react-map-gl";
 import "./Pin.css";
 import { MyContext } from "../context";
-import CloseIcon from "@mui/icons-material/Close";
 import EditInfoBox from "./EditInfoBox";
 
 const NewPin = () => {
   const { zoom, newPlace } = useContext(MyContext);
-
   const lat = newPlace.lat;
   const lng = newPlace.lng;
 

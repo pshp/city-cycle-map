@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { Marker } from "react-map-gl";
-import Room from "@mui/icons-material/Room";
 import { Popup } from "react-map-gl";
 import "./Pin.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -9,16 +7,8 @@ import { MyContext } from "../context";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const InfoBox = ({ data }) => {
-  const {
-    handleDelete,
-    handleEdit,
-    handleClose,
-    currentPinId,
-    pinClick,
-    zoom,
-    newPlace,
-    panMap,
-  } = useContext(MyContext);
+  const { handleClickDelete, handleClickEdit, handleClickClose, panMap } =
+    useContext(MyContext);
 
   return (
     <>
@@ -36,19 +26,19 @@ const InfoBox = ({ data }) => {
             <EditIcon
               className="edit-button icon-button"
               onClick={() => {
-                handleEdit();
+                handleClickEdit();
               }}
             />
             <DeleteForeverIcon
               className="delete-button icon-button"
               onClick={() => {
-                handleDelete();
+                handleClickDelete();
               }}
             />
             <CloseIcon
               className="close-button icon-button"
               onClick={() => {
-                handleClose();
+                handleClickClose();
               }}
             />
           </div>

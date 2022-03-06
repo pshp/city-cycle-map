@@ -15,6 +15,8 @@ const BaseMap = () => {
   const [pinArray, setPinArray] = useState([]);
   const [newPlace, setNewPlace] = useState(null);
   const [editPlace, setEditPlace] = useState(false);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
   useEffect(() => {
     getPins()
@@ -24,16 +26,49 @@ const BaseMap = () => {
       .catch((e) => console.log(e));
   }, []);
 
+  useEffect(() => {
+    if (editPlace) {
+      const details = pinArray.find((el) => el._id == currentPinId);
+      setTitle(details.title);
+      setDesc(details.description);
+    } else {
+      setTitle("");
+      setDesc("");
+    }
+  }, [editPlace]);
+
+  useEffect(() => {
+    setTitle("");
+    setDesc("");
+    setEditPlace(false);
+  }, [currentPinId]);
+
+  const pinClick = (id) => {
+    setNewPlace(null);
+    setCurrentPinId(id);
+  };
+
+  const panMap = (lon, lat) => {
+    myMap.flyTo({ center: [lon, lat] });
+  };
+
   const onMapZoom = (el) => {
     setZoom(el.viewState.zoom);
   };
 
-  const handleEdit = () => {
+  const handleDescChange = (d) => {
+    setDesc(d);
+  };
+
+  const handleTitleChange = (t) => {
+    setTitle(t);
+  };
+
+  const handleClickEdit = () => {
     setEditPlace(true);
   };
 
-  const handleDelete = () => {
-    console.log(currentPinId);
+  const handleClickDelete = () => {
     deletePin(currentPinId)
       .then(() => {
         const newPins = pinArray.filter((el) => el._id !== currentPinId);
@@ -42,7 +77,7 @@ const BaseMap = () => {
       .catch((e) => console.log(e));
   };
 
-  const handleAddClick = (e) => {
+  const handleClickAdd = (e) => {
     setCurrentPinId(null);
     const { lng, lat } = e.lngLat;
     panMap(lng, lat);
@@ -52,75 +87,58 @@ const BaseMap = () => {
     });
   };
 
-  const handleClose = () => {
+  const handleClickClose = () => {
     setNewPlace(null);
-    setEditPlace(false);
     setCurrentPinId(null);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newPlace == null) {
-      handleEditSubmit(e);
+      handleEditSubmit();
     } else {
-      handleNewPinSubmit(e);
+      handleNewPinSubmit();
     }
   };
 
-  const handleNewPinSubmit = (e) => {
+  const handleNewPinSubmit = () => {
     const newPin = {
       longitude: newPlace.lng,
       latitude: newPlace.lat,
       username: "empty",
-      title: e.target.title.value,
-      description: e.target.description.value,
+      title: title,
+      description: desc,
     };
 
     postPin(newPin)
       .then((pin) => {
         setPinArray((currPins) => [...currPins, pin]);
+        setNewPlace(null);
         pinClick(pin._id);
-        //   console.log(pin);
       })
       .catch((e) => console.log(e));
-    setNewPlace(null);
   };
 
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    console.log("edit started, id:", currentPinId);
-
+  const handleEditSubmit = () => {
     const body = {
-      // longitude: newPlace.lng,
-      // latitude: newPlace.lat,
-      title: e.target.title.value,
-      description: e.target.description.value,
+      title: title,
+      description: desc,
     };
 
     editPin(currentPinId, body)
       .then((pin) => {
         const newPins = pinArray.map((el) => {
           if (el._id === currentPinId) {
-            el.title = e.target.title.value;
-            el.description = e.target.description.value;
+            el.title = title;
+            el.description = desc;
           }
           return el;
         });
         setPinArray(newPins);
         pinClick(pin._id);
         setEditPlace(false);
-        //   console.log(pin);
       })
       .catch((e) => console.log(e));
-  };
-
-  const pinClick = (id) => {
-    setNewPlace(null);
-    setCurrentPinId(id);
-  };
-
-  const panMap = (lon, lat) => {
-    myMap.flyTo({ center: [lon, lat] });
   };
 
   return (
@@ -133,10 +151,14 @@ const BaseMap = () => {
         setNewPlace,
         panMap,
         handleSubmit,
-        handleClose,
-        handleDelete,
-        handleEdit,
+        handleClickClose,
+        handleClickDelete,
+        handleClickEdit,
         editPlace,
+        title,
+        desc,
+        handleDescChange,
+        handleTitleChange,
       }}
     >
       <div className="map">
@@ -153,7 +175,7 @@ const BaseMap = () => {
           onZoom={(el) => onMapZoom(el)}
           doubleClickZoom={false}
           onDblClick={(e) => {
-            handleAddClick(e);
+            handleClickAdd(e);
           }}
         >
           <PinList pinArray={pinArray} />
