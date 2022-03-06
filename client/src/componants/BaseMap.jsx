@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import ReactMapGL, { useMap, ScaleControl, NavigationControl } from "react-map-gl";
+import ReactMapGL, {
+  useMap,
+  ScaleControl,
+  NavigationControl,
+} from "react-map-gl";
 import PinList from "./PinList";
 import "./BaseMap.css";
 import { getPins, postPin, editPin, deletePin } from "../services/api-service";
 import { MyContext } from "../context";
 import "./Pin.css";
+import UserButtons from "./UserButtons";
 
 const BaseMap = () => {
   const { myMap } = useMap();
@@ -161,6 +166,9 @@ const BaseMap = () => {
         handleTitleChange,
       }}
     >
+      <>
+        <UserButtons />
+      </>
       <div className="map">
         <ReactMapGL
           id="myMap"
@@ -179,15 +187,10 @@ const BaseMap = () => {
           }}
         >
           <PinList pinArray={pinArray} />
-          <ScaleControl/>
+          <ScaleControl />
           <NavigationControl />
-
-
-
         </ReactMapGL>
-
       </div>
-
     </MyContext.Provider>
   );
 };
