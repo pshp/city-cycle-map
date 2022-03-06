@@ -20,17 +20,28 @@ export const postPin = async (data) => {
     .catch((error) => console.log(error));
 };
 
-// export const updateTitle = async (id, title) => {
-//   return fetch(baseUrl+id+'/title/', {
-//     method:"PATCH",
-//     headers: headers,
-//     body: JSON.stringify({title: title})
-//   }).then(
-//     res => res.json()
-//   ).catch(
-//     (error) => console.log(error)
-//   );
-// }
+export const deletePin = async (id) => {
+  return fetch(baseUrl + "pins/" + id, {
+    method:"DELETE",
+    headers: headers,
+  }).then(
+    res => res.json()
+  ).catch(
+    (error) => console.log(error)
+  );
+}
+
+export const updatePin = async (id, title, desc) => {
+  return fetch(baseUrl + "pins/" + id, {
+    method:"PATCH",
+    headers: headers,
+    body: JSON.stringify({title: title, description: desc})
+  }).then(
+    res => res.json()
+  ).catch(
+    (error) => console.log(error)
+  );
+}
 
 // export const updateStatus = async (id, status) => {
 //   return fetch(baseUrl+id+'/status/', {
@@ -44,13 +55,4 @@ export const postPin = async (data) => {
 //   );
 // }
 
-// export const deleteTask = async (id) => {
-//   return fetch(baseUrl + id, {
-//     method:"DELETE",
-//     headers: headers,
-//   }).then(
-//     res => res.json()
-//   ).catch(
-//     (error) => console.log(error)
-//   );
-// }
+

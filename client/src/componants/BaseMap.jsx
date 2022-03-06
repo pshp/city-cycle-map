@@ -2,13 +2,9 @@ import React, { useEffect, useState } from "react";
 import ReactMapGL, { useMap } from "react-map-gl";
 import PinList from "./PinList";
 import "./BaseMap.css";
-import { getPins, postPin } from "../services/api-service";
+import { getPins, postPin, deletePin } from "../services/api-service";
 import { MyContext } from "../context";
-import { Marker } from "react-map-gl";
-import Room from "@mui/icons-material/Room";
-import { Popup } from "react-map-gl";
 import "./Pin.css";
-import NewPin from "./NewPin";
 
 const BaseMap = () => {
   const { myMap } = useMap();
@@ -17,10 +13,7 @@ const BaseMap = () => {
   const initialZoom = 11;
   const [zoom, setZoom] = useState(initialZoom);
   const [pinArray, setPinArray] = useState([]);
-
   const [newPlace, setNewPlace] = useState(null);
-  const [newTitle, setNewTitle] = useState(null);
-  const [newDesc, setNewDesc] = useState(null);
 
   useEffect(() => {
     getPins()
@@ -31,24 +24,27 @@ const BaseMap = () => {
   }, []);
 
   const handleClose = () => {
-    setNewPlace();
-  }
-
-  useEffect(() => {
-    console.log("pinchanged to:", currentPinId);
-  }, [currentPinId]);
-
-  useEffect(() => {
-    console.log("NewPlace = ", newPlace);
-  }, [newPlace]);
+    setNewPlace(null);
+  };
 
   const onMapZoom = (el) => {
     setZoom(el.viewState.zoom);
   };
 
+  const handleDelete = () => {
+    console.log(currentPinId)
+    deletePin(currentPinId)
+      .then(() => {
+        const newPins = pinArray.filter((el) => el._id !== currentPinId);
+        setPinArray(newPins);
+      })
+      .catch((e) => console.log(e));
+  };
+
   const handleAddClick = (e) => {
-    console.log("addclick");
+    setCurrentPinId(null);
     const { lng, lat } = e.lngLat;
+    panMap(lng, lat);
     setNewPlace({
       lat: lat,
       lng: lng,
@@ -57,20 +53,25 @@ const BaseMap = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("NEW EVENT: ", e);
-
+    if (newPlace == null) {
+      return;
+    }
     const newPin = {
       longitude: newPlace.lng,
       latitude: newPlace.lat,
       username: "empty",
+      title: e.target.title.value,
+      description: e.target.description.value,
     };
 
     postPin(newPin)
       .then((pin) => {
         setPinArray((currPins) => [...currPins, pin]);
         pinClick(pin._id);
+        //   console.log(pin);
       })
       .catch((e) => console.log(e));
+    setNewPlace(null);
   };
 
   const closeInfoBox = () => {
@@ -97,6 +98,7 @@ const BaseMap = () => {
         closeInfoBox,
         handleSubmit,
         handleClose,
+        handleDelete,
       }}
     >
       <div className="map">
@@ -117,9 +119,6 @@ const BaseMap = () => {
           }}
         >
           <PinList pinArray={pinArray} />
-          {newPlace !== null && (
-            <NewPin lat={newPlace.lat} lng={newPlace.lng}></NewPin>
-          )}
         </ReactMapGL>
       </div>
     </MyContext.Provider>

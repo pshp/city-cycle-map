@@ -1,73 +1,69 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Marker } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 import Room from "@mui/icons-material/Room";
-import StarIcon from "@mui/icons-material/Star";
 import { Popup } from "react-map-gl";
 import "./Pin.css";
-import { useMap } from "react-map-gl";
 import { MyContext } from "../context";
+import CloseIcon from "@mui/icons-material/Close";
 
-const NewPin = ({ lat, lng }) => {
-  const {
-    currentPinId,
-    pinClick,
-    zoom,
-    newPlace,
-    panMap,
-    setNewPlace,
-    closeInfoBox,
-    handleSubmit,
-  } = useContext(MyContext);
+const NewPin = () => {
+  const { zoom, newPlace, setNewPlace, handleSubmit } = useContext(MyContext);
 
   const handleClose = () => {
-    setNewPlace();
-  }
+    setNewPlace(null);
+  };
 
   return (
     <>
       <Marker
-        longitude={lng}
-        latitude={lat}
+        longitude={newPlace.lng}
+        latitude={newPlace.lat}
         anchor="bottom"
         draggable="true"
         offset={[0, 0.8 * zoom]}
       >
         <Room
           style={{
-            color: "slateblue",
+            color: "#009cb8",
             fontSize: 30,
           }}
         />
       </Marker>
 
       <Popup
-        longitude={lng}
-        latitude={lat}
+        longitude={newPlace.lng}
+        latitude={newPlace.lat}
         anchor="left"
         closeOnClick={false}
         closeButton={false}
         offset={[9, -8]}
       >
-        <div className="card">
-          <button
-            className="closeButton"
+        <form className="submit-card" onSubmit={handleSubmit}>
+          {/* <div>
+            <Room style={{ color: "violet", fontSize: 20 }} />
+            <Room style={{ color: "indigo", fontSize: 20 }} />
+            <Room style={{ color: "blue", fontSize: 20 }} />
+            <Room style={{ color: "gold", fontSize: 20 }} />
+            <Room style={{ color: "orange", fontSize: 20 }} />
+            <Room style={{ color: "tomato", fontSize: 20 }} />
+          </div> */}
+          <CloseIcon
+            className="icon-buttons icon-button close-button"
             onClick={() => {
               handleClose();
             }}
-          >
-            X
+          />
+          <label>Title</label>
+          <input name="title" placeholder="Enter a title" autoFocus />
+          <label>Description</label>
+          <textarea
+            name="description"
+            placeholder="Say us something about this place."
+          />
+          <button type="submit" className="submitButton">
+            Add Pin
           </button>
-          <form onSubmit={handleSubmit}>
-            <label>Title</label>
-            <input placeholder="Enter a title" autoFocus />
-            <label>Description</label>
-            <textarea placeholder="Say us something about this place." />
-            <button type="submit" className="submitButton">
-              Add Pin
-            </button>
-          </form>
-        </div>
+        </form>
       </Popup>
     </>
   );
