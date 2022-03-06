@@ -1,0 +1,25 @@
+.user-buttons {
+  position: absolute;
+  z-index: 2;
+}
+
+.user-buttons button {
+  color: white;
+  border: none;
+  padding:5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.login {
+  background-color: tomato;
+}
+
+.logout {
+  background-color: teal;
+}
+
+.register {
+  background-color: slateblue;
+}

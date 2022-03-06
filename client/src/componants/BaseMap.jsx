@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ReactMapGL, { useMap } from "react-map-gl";
+import ReactMapGL, { useMap, ScaleControl, NavigationControl } from "react-map-gl";
 import PinList from "./PinList";
 import "./BaseMap.css";
 import { getPins, postPin, editPin, deletePin } from "../services/api-service";
@@ -179,8 +179,15 @@ const BaseMap = () => {
           }}
         >
           <PinList pinArray={pinArray} />
+          <ScaleControl/>
+          <NavigationControl />
+
+
+
         </ReactMapGL>
+
       </div>
+
     </MyContext.Provider>
   );
 };
