@@ -1,11 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import "./Register";
 import "./Register.css";
 import bikeIcon from "../../assets/bike-logo.ico";
 import { newUser } from "../../services/api-service";
 import CloseIcon from "@mui/icons-material/Close";
+import { MyContext } from "../../context";
 
 export default function Register() {
+  const { handleCloseRegister } = useContext(MyContext);
   const [correct, setCorrect] = useState(false);
   const [error, setError] = useState(false);
   const usernameRef = useRef();
@@ -37,9 +39,7 @@ export default function Register() {
       <CloseIcon
 
               className="register-close close-button icon-button"
-              onClick={() => {
-                ;
-              }}
+              onClick={() => handleCloseRegister()}
             />
       <div className="logo-title">
         <img className="logo" src={bikeIcon} />
