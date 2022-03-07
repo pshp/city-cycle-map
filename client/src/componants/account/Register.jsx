@@ -1,10 +1,9 @@
-import React, { useState, useRef, useContext } from "react";
-import "./Register";
-import "./Register.css";
-import bikeIcon from "../../assets/bike-logo.ico";
-import { newUser } from "../../services/api-service";
-import CloseIcon from "@mui/icons-material/Close";
-import { MyContext } from "../../context";
+import React, { useState, useRef, useContext } from 'react';
+import './Register.css';
+import CloseIcon from '@mui/icons-material/Close';
+import bikeIcon from '../../assets/bike-logo.ico';
+import { newUser } from '../../services/api-service';
+import MyContext from '../../context';
 
 export default function Register() {
   const { handleRegisterClose } = useContext(MyContext);
@@ -28,8 +27,8 @@ export default function Register() {
         setCorrect(true);
         setError(false);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((err) => {
+        console.log(err);
         setCorrect(false);
         setError(true);
       });
@@ -38,25 +37,38 @@ export default function Register() {
   return (
     <div className="register-container">
       <CloseIcon
-
-              className="register-close close-button icon-button"
-              onClick={() => handleRegisterClose()}
-            />
+        className="register-close close-button icon-button"
+        onClick={() => handleRegisterClose()}
+      />
       <div className="logo-title">
-        <img className="logo" src={bikeIcon} />
+        <img alt="" className="logo" src={bikeIcon} />
         <p> &nbsp; &nbsp;Cycle Map Berlin</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <input autoComplete="off" type="text" placeholder="username" ref={usernameRef} />
-        <input autoComplete="off" type="email" placeholder="email" ref={emailRef} />
-        <input autoComplete="new-password" type="password" placeholder="password" ref={passwordRef} />
+        <input
+          autoComplete="off"
+          type="text"
+          placeholder="username"
+          ref={usernameRef}
+        />
+        <input
+          autoComplete="off"
+          type="email"
+          placeholder="email"
+          ref={emailRef}
+        />
+        <input
+          autoComplete="new-password"
+          type="password"
+          placeholder="password"
+          ref={passwordRef}
+        />
         <button className="register-button" type="submit">
           Register
         </button>
-
       </form>
       {correct && <p className="correct">Account created. Please log in</p>}
-        {error && <p className="error">Something went wrong...</p>}
+      {error && <p className="error">Something went wrong...</p>}
     </div>
   );
 }

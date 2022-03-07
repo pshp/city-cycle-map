@@ -1,4 +1,4 @@
-const Pin = require("../models/Pin");
+const Pin = require('../models/Pin');
 
 const getPins = async (req, res) => {
   try {
@@ -70,4 +70,6 @@ const deleteAllPins = async (req, res) => {
   }
 };
 
-module.exports = { getPins, postPin, editPin, deletePin, deleteAllPins };
+module.exports = {
+  getPins, postPin, editPin, deletePin, deleteAllPins,
+};

@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
-import { Marker } from "react-map-gl";
-import Room from "@mui/icons-material/Room";
-import "./Pin.css";
-import { MyContext } from "../context";
-import InfoBox from "./InfoBox";
-import EditInfoBox from "./EditInfoBox";
+import React, { useContext } from 'react';
+import { Marker } from 'react-map-gl';
+import Room from '@mui/icons-material/Room';
+import './Pin.css';
+import MyContext from '../context';
+import InfoBox from './InfoBox';
+import EditInfoBox from './EditInfoBox';
 
-const Pin = ({ data }) => {
-  const { currentPinId, pinClick, zoom, editPlace } = useContext(MyContext);
+function Pin({ data }) {
+  const {
+    currentPinId, pinClick, zoom, editPlace,
+  } = useContext(MyContext);
   const lng = data.longitude;
   const lat = data.latitude;
 
@@ -25,23 +27,19 @@ const Pin = ({ data }) => {
       >
         <Room
           style={{
-            color: "#FF6347",
+            color: '#FF6347',
             fontSize: 30,
           }}
         />
       </Marker>
-      {!editPlace && currentPinId == data._id && (
-        <>
-          <InfoBox data={data} />
-        </>
+      {!editPlace && currentPinId === data._id && (
+        <InfoBox data={data} />
       )}
-      {editPlace && currentPinId == data._id && (
-        <>
-          <EditInfoBox lng={lng} lat={lat} />
-        </>
+      {editPlace && currentPinId === data._id && (
+        <EditInfoBox lng={lng} lat={lat} />
       )}
     </div>
   );
-};
+}
 
 export default Pin;

@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import "./UserButtons.css";
-import { MyContext } from "../../context";
+import React, { useContext } from 'react';
+import './UserButtons.css';
+import MyContext from '../../context';
 
-const UserButtons = () => {
+function UserButtons() {
   const {
     handleRegisterStart,
     handleLoginStart,
@@ -11,11 +11,11 @@ const UserButtons = () => {
 
   return (
     <div className="user-buttons">
-      <button className="logout" onClick={handleLogout}>Log Out</button>
-      <button className="login" onClick={handleLoginStart}>LogIn</button>
-      <button className="register" onClick={handleRegisterStart}>Register</button>
+      <button type="button" className="logout" onClick={handleLogout}>Log Out</button>
+      <button type="button" className="login" onClick={handleLoginStart}>LogIn</button>
+      <button type="button" className="register" onClick={handleRegisterStart}>Register</button>
     </div>
   );
-};
+}
 
 export default UserButtons;

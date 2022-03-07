@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from 'react';
 import ReactMapGL, {
   useMap,
   ScaleControl,
   NavigationControl,
-} from "react-map-gl";
-import PinList from "./PinList";
-import "./BaseMap.css";
-import { getPins, postPin, editPin, deletePin } from "../services/api-service";
-import { MyContext } from "../context";
-import "./Pin.css";
-import UserButtons from "./account/UserButtons";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
-import Register from "./account/Register";
-import Login from "./account/Login";
-const BaseMap = () => {
+} from 'react-map-gl';
+import PinList from './PinList';
+import './BaseMap.css';
+import {
+  getPins, postPin, editPin, deletePin,
+} from '../services/api-service';
+import MyContext from '../context';
+import './Pin.css';
+import UserButtons from './account/UserButtons';
+import Register from './account/Register';
+import Login from './account/Login';
 
+function BaseMap() {
   const { myMap } = useMap();
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
   const [currentPinId, setCurrentPinId] = useState(0);
   const initialZoom = 11;
   const [zoom, setZoom] = useState(initialZoom);
   const [pinArray, setPinArray] = useState([]);
   const [newPlace, setNewPlace] = useState(null);
   const [editPlace, setEditPlace] = useState(false);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
 
@@ -38,18 +39,18 @@ const BaseMap = () => {
 
   useEffect(() => {
     if (editPlace) {
-      const details = pinArray.find((el) => el._id == currentPinId);
+      const details = pinArray.find((el) => el._id === currentPinId);
       setTitle(details.title);
       setDesc(details.description);
     } else {
-      setTitle("");
-      setDesc("");
+      setTitle('');
+      setDesc('');
     }
   }, [editPlace]);
 
   useEffect(() => {
-    setTitle("");
-    setDesc("");
+    setTitle('');
+    setDesc('');
     setEditPlace(false);
   }, [currentPinId]);
 
@@ -81,7 +82,6 @@ const BaseMap = () => {
   const handleRegisterStart = () => {
     setShowRegister(!showRegister);
     setShowLogin(false);
-
   };
   const handleRegisterSubmit = () => {
     setShowRegister(false);
@@ -105,13 +105,12 @@ const BaseMap = () => {
   };
 
   const handleLogout = () => {
-    //(false);
+    // (false);
   };
 
-
-  const handleClose = () => {
-    setEditPlace(true);
-  };
+  // const handleClose = () => {
+  //   setEditPlace(true);
+  // };
 
   const handleClickDelete = () => {
     deletePin(currentPinId)
@@ -127,8 +126,8 @@ const BaseMap = () => {
     const { lng, lat } = e.lngLat;
     panMap(lng, lat);
     setNewPlace({
-      lat: lat,
-      lng: lng,
+      lat,
+      lng,
     });
   };
 
@@ -137,21 +136,12 @@ const BaseMap = () => {
     setCurrentPinId(null);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newPlace == null) {
-      handleEditSubmit();
-    } else {
-      handleNewPinSubmit();
-    }
-  };
-
   const handleNewPinSubmit = () => {
     const newPin = {
       longitude: newPlace.lng,
       latitude: newPlace.lat,
-      username: "empty",
-      title: title,
+      username: 'empty',
+      title,
       description: desc,
     };
 
@@ -166,18 +156,19 @@ const BaseMap = () => {
 
   const handleEditSubmit = () => {
     const body = {
-      title: title,
+      title,
       description: desc,
     };
 
     editPin(currentPinId, body)
       .then((pin) => {
         const newPins = pinArray.map((el) => {
-          if (el._id === currentPinId) {
-            el.title = title;
-            el.description = desc;
+          const newEl = el;
+          if (newEl._id === currentPinId) {
+            newEl.title = title;
+            newEl.description = desc;
           }
-          return el;
+          return newEl;
         });
         setPinArray(newPins);
         pinClick(pin._id);
@@ -185,35 +176,44 @@ const BaseMap = () => {
       })
       .catch((e) => console.log(e));
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newPlace == null) {
+      handleEditSubmit();
+    } else {
+      handleNewPinSubmit();
+    }
+  };
+  const contextStuff = useMemo(() => ({
+    currentPinId,
+    pinClick,
+    zoom,
+    newPlace,
+    setNewPlace,
+    panMap,
+    handleSubmit,
+    handleClickClose,
+    handleClickDelete,
+    handleClickEdit,
+    editPlace,
+    title,
+    desc,
+    handleDescChange,
+    handleTitleChange,
+    showRegister,
+    showLogin,
+    handleRegisterStart,
+    handleRegisterSubmit,
+    handleRegisterClose,
+    handleLoginStart,
+    handleLoginSubmit,
+    handleLoginClose,
+    handleLogout,
+  }), [currentPinId, zoom, newPlace, title, desc, showRegister, showLogin]);
 
   return (
     <MyContext.Provider
-      value={{
-        currentPinId,
-        pinClick,
-        zoom,
-        newPlace,
-        setNewPlace,
-        panMap,
-        handleSubmit,
-        handleClickClose,
-        handleClickDelete,
-        handleClickEdit,
-        editPlace,
-        title,
-        desc,
-        handleDescChange,
-        handleTitleChange,
-        showRegister,
-        showLogin,
-        handleRegisterStart,
-        handleRegisterSubmit,
-        handleRegisterClose,
-        handleLoginStart,
-        handleLoginSubmit,
-        handleLoginClose,
-        handleLogout,
-      }}
+      value={contextStuff}
     >
       <div className="map">
         <ReactMapGL
@@ -223,7 +223,7 @@ const BaseMap = () => {
             latitude: 52.52,
             zoom: initialZoom,
           }}
-          style={{ width: "100vw", height: "100vh" }}
+          style={{ width: '100vw', height: '100vh' }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           mapboxAccessToken={process.env.REACT_APP_MAPBOX}
           onZoom={(el) => onMapZoom(el)}
@@ -244,6 +244,6 @@ const BaseMap = () => {
       </div>
     </MyContext.Provider>
   );
-};
+}
 
 export default BaseMap;

@@ -8,7 +8,7 @@
   align-items: flex-start;
 }
 
-label {
+.label {
   width: fit-content;
   color: teal;
   font-size: 13px;

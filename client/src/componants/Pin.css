@@ -38,7 +38,7 @@
   align-items: flex-start;
 }
 
-label {
+.label {
   width: max-content;
   color: tomato;
   font-size: 13px;
