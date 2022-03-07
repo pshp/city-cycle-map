@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import './Register.css';
+import './UserForm.css';
 import CloseIcon from '@mui/icons-material/Close';
 import bikeIcon from '../../assets/bike-logo.ico';
 import { newUser } from '../../services/api-service';
@@ -10,14 +10,12 @@ export default function Register() {
   const [correct, setCorrect] = useState(false);
   const [error, setError] = useState(false);
   const usernameRef = useRef();
-  const emailRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
       username: usernameRef.current.value,
-      email: emailRef.current.value,
       password: passwordRef.current.value,
     };
 
@@ -35,14 +33,14 @@ export default function Register() {
   };
 
   return (
-    <div className="register-container">
+    <div className="user-form-container">
       <CloseIcon
-        className="register-close close-button icon-button"
+        className="user-form-close close-button icon-button"
         onClick={() => handleRegisterClose()}
       />
       <div className="logo-title">
         <img alt="" className="logo" src={bikeIcon} />
-        <p> &nbsp; &nbsp;Cycle Map Berlin</p>
+        <p>&nbsp;&nbsp;Cycle Map Berlin</p>
       </div>
       <form onSubmit={handleSubmit}>
         <input
@@ -52,18 +50,12 @@ export default function Register() {
           ref={usernameRef}
         />
         <input
-          autoComplete="off"
-          type="email"
-          placeholder="email"
-          ref={emailRef}
-        />
-        <input
           autoComplete="new-password"
           type="password"
           placeholder="password"
           ref={passwordRef}
         />
-        <button className="register-button" type="submit">
+        <button className="user-form-button" type="submit">
           Register
         </button>
       </form>

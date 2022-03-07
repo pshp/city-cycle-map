@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import './Login.css';
+import './UserForm.css';
 import CloseIcon from '@mui/icons-material/Close';
 import bikeIcon from '../../assets/bike-logo.ico';
 import { loginUser } from '../../services/api-service';
@@ -34,9 +34,9 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="user-form-container">
       <CloseIcon
-        className="login-close close-button icon-button"
+        className="user-form-close close-button icon-button"
         onClick={() => handleLoginClose()}
       />
       <div className="logo-title">
@@ -56,7 +56,7 @@ function Login() {
           type="password"
           placeholder="password"
         />
-        <button className="login-button" type="submit">
+        <button className="user-form-button" type="submit">
           Login
         </button>
       </form>

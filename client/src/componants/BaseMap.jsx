@@ -92,7 +92,6 @@ function BaseMap() {
   };
 
   const handleLoginStart = () => {
-    console.log(showLogin);
     setShowLogin(!showLogin);
     setShowRegister(false);
   };
