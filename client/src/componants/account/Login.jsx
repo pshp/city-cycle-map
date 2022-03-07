@@ -1,4 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, {
+  useState, useContext, useRef, useEffect,
+} from 'react';
 import './UserForm.css';
 import CloseIcon from '@mui/icons-material/Close';
 import bikeIcon from '../../assets/bike-logo.ico';
@@ -9,21 +11,24 @@ function Login() {
   const { handleLoginClose, handleLoginSubmit } = useContext(MyContext);
   const [correct, setCorrect] = useState(false);
   const [error, setError] = useState(false);
-  // const usernameRef = useRef();
-  // const emailRef = useRef();
-  // const passwordRef = useRef();
+
+  const usernameRef = useRef();
+  const passwordRef = useRef();
+
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
-      username: e.target.username.value,
-      password: e.target.password.value,
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
     };
 
     loginUser(body)
       .then((res) => {
         if (res.error) throw new Error(res.error);
-        // console.log(res);
         setCorrect(true);
         setError(false);
         handleLoginSubmit(res.data.username);
@@ -47,16 +52,16 @@ function Login() {
       </div>
       <form onSubmit={handleSubmit}>
         <input
-          name="username"
           autoComplete="off"
           type="text"
           placeholder="username"
+          ref={usernameRef}
         />
         <input
-          name="password"
           autoComplete="new-password"
           type="password"
           placeholder="password"
+          ref={passwordRef}
         />
         <button className="user-form-button" type="submit">
           Login

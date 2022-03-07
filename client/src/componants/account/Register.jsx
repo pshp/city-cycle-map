@@ -1,4 +1,6 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, {
+  useState, useRef, useContext, useEffect,
+} from 'react';
 import './UserForm.css';
 import CloseIcon from '@mui/icons-material/Close';
 import bikeIcon from '../../assets/bike-logo.ico';
@@ -31,6 +33,10 @@ export default function Register() {
         setError(true);
       });
   };
+
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
 
   return (
     <div className="user-form-container">

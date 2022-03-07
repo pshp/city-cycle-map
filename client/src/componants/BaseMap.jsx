@@ -4,6 +4,9 @@ import ReactMapGL, {
   ScaleControl,
   NavigationControl,
 } from 'react-map-gl';
+import DirectionsIcon from '@mui/icons-material/Directions';
+
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import PinList from './PinList';
 import './BaseMap.css';
 import {
@@ -14,6 +17,7 @@ import './Pin.css';
 import UserButtons from './account/UserButtons';
 import Register from './account/Register';
 import Login from './account/Login';
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
 function BaseMap() {
   const userStorage = window.localStorage;
@@ -30,6 +34,7 @@ function BaseMap() {
   const [desc, setDesc] = useState('');
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [showDirections, setShowDirections] = useState(false);
 
   useEffect(() => {
     if (userStorage.user) {
@@ -115,9 +120,14 @@ function BaseMap() {
     setShowLogin(false);
   };
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     setCurrentUser(null);
+    refreshPage();
   };
 
   const handleClickDelete = () => {
@@ -193,6 +203,36 @@ function BaseMap() {
       handleNewPinSubmit();
     }
   };
+
+  const directions = new MapboxDirections({
+    accessToken: process.env.REACT_APP_MAPBOX,
+    unit: 'metric',
+    profile: 'mapbox/cycling',
+    alternatives: true,
+
+    controls: {
+      profileSwitcher: false,
+      instructions: false,
+    },
+
+  });
+
+  const addNav = () => {
+    myMap.addControl(directions, 'top-left');
+    setShowDirections(true);
+  };
+
+  const removeNav = () => {
+    myMap.removeControl(directions);
+    setShowDirections(false);
+  };
+
+  const handleClickDirections = () => {
+    console.log(showDirections);
+    if (!showDirections) addNav();
+    else if (showDirections) removeNav();
+  };
+
   const contextStuff = useMemo(() => ({
     currentUser,
     currentPinId,
@@ -251,8 +291,14 @@ function BaseMap() {
           onDblClick={(e) => {
             handleClickAdd(e);
           }}
+
         >
-          { currentUser && (<PinList pinArray={pinArray} />)}
+          { currentUser && (
+          <>
+            <PinList pinArray={pinArray} />
+            <DirectionsIcon onClick={handleClickDirections} fontSize="large" className="directions" />
+          </>
+          )}
           <ScaleControl />
           <NavigationControl />
           <UserButtons />

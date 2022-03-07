@@ -1,6 +1,8 @@
 .user-buttons {
   position: absolute;
   z-index: 2;
+  bottom: 0;
+  right:0;
 }
 
 .user-buttons button {
@@ -10,6 +12,7 @@
   border-radius: 5px;
   cursor: pointer;
   margin:3px;
+  height:30px;
 }
 
 
