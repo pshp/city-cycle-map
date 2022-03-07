@@ -41,7 +41,7 @@ function Login() {
       />
       <div className="logo-title">
         <img alt="" className="logo" src={bikeIcon} />
-        <p> &nbsp; &nbsp;Cycle Map Berlin</p>
+        <p>Cycle Map Berlin</p>
       </div>
       <form onSubmit={handleSubmit}>
         <input
