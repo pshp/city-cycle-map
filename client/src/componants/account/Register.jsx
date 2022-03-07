@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { MyContext } from "../../context";
 
 export default function Register() {
-  const { handleCloseRegister } = useContext(MyContext);
+  const { handleRegisterClose } = useContext(MyContext);
   const [correct, setCorrect] = useState(false);
   const [error, setError] = useState(false);
   const usernameRef = useRef();
@@ -39,16 +39,16 @@ export default function Register() {
       <CloseIcon
 
               className="register-close close-button icon-button"
-              onClick={() => handleCloseRegister()}
+              onClick={() => handleRegisterClose()}
             />
       <div className="logo-title">
         <img className="logo" src={bikeIcon} />
         <p> &nbsp; &nbsp;Cycle Map Berlin</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="username" ref={usernameRef} />
-        <input type="email" placeholder="email" ref={emailRef} />
-        <input type="password" placeholder="password" ref={passwordRef} />
+        <input autoComplete="off" type="text" placeholder="username" ref={usernameRef} />
+        <input autoComplete="off" type="email" placeholder="email" ref={emailRef} />
+        <input autoComplete="new-password" type="password" placeholder="password" ref={passwordRef} />
         <button className="register-button" type="submit">
           Register
         </button>

@@ -12,8 +12,9 @@ import "./Pin.css";
 import UserButtons from "./account/UserButtons";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import Register from "./account/Register";
-
+import Login from "./account/Login";
 const BaseMap = () => {
+
   const { myMap } = useMap();
   const [currentUser, setCurrentUser] = useState(null);
   const [currentPinId, setCurrentPinId] = useState(0);
@@ -24,7 +25,7 @@ const BaseMap = () => {
   const [editPlace, setEditPlace] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [showRegister, setShowRegister] = useState(true);
+  const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
 
   useEffect(() => {
@@ -78,25 +79,33 @@ const BaseMap = () => {
   };
 
   const handleRegisterStart = () => {
-    setShowRegister(true);
+    setShowRegister(!showRegister);
+    setShowLogin(false);
+
   };
   const handleRegisterSubmit = () => {
     setShowRegister(false);
   };
 
-  const handleCloseRegister = () => {
+  const handleRegisterClose = () => {
     setShowRegister(false);
   };
 
   const handleLoginStart = () => {
-    showLogin(true);
+    console.log(showLogin);
+    setShowLogin(!showLogin);
+    setShowRegister(false);
   };
   const handleLoginSubmit = () => {
-    showLogin(false);
+    setShowLogin(false);
+  };
+
+  const handleLoginClose = () => {
+    setShowLogin(false);
   };
 
   const handleLogout = () => {
-    showLogin(false);
+    //(false);
   };
 
 
@@ -199,9 +208,10 @@ const BaseMap = () => {
         showLogin,
         handleRegisterStart,
         handleRegisterSubmit,
-        handleCloseRegister,
+        handleRegisterClose,
         handleLoginStart,
         handleLoginSubmit,
+        handleLoginClose,
         handleLogout,
       }}
     >
@@ -226,7 +236,10 @@ const BaseMap = () => {
           <ScaleControl />
           <NavigationControl />
           <UserButtons />
+
           {showRegister && (<Register />)}
+          {showLogin && (<Login />)}
+
         </ReactMapGL>
       </div>
     </MyContext.Provider>

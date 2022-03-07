@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 const controllers = require("./controllers/controllers.js");
 
-router.post("/users", controllers.register);
-router.post("/login", controllers.login);
+router.post("/users/signup", controllers.register);
+router.post("/users/login", controllers.login);
+//router.post("/users/logout", controllers.logout);
 
 router.get("/pins", controllers.getPins);
 router.post("/pins", controllers.postPin);

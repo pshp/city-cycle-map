@@ -1,8 +1,8 @@
-
-
 .register-container {
   width: 50%;
+  max-width: 250px;
   height: 50%;
+  max-height: 300px;
   padding: 20px;
   border-radius: 10px;
   background-color: white;
@@ -18,18 +18,14 @@
   justify-content: space-between;
 }
 
-
 .register-container form {
   width: 80%;
   height: 80%;
   margin: auto;
-
   display: flex;
   flex-direction: column;
-
   justify-content: space-between;
 }
-
 
 .register-cancel {
   position: absolute;
@@ -47,28 +43,26 @@
   cursor: pointer;
 }
 
-input:focus,
-{  outline: none;
+input:focus {
+  outline: none;
 }
 
-.register-close  {
+.register-close {
   position: absolute;
   right: 5px;
-  top:5px;
+  top: 5px;
 }
 
 .logo {
-
-  height:20px;
+  height: 20px;
 }
 .logo-title {
-  font-size:12px;
+  font-size: 12px;
   display: flex;
   color: slateblue;
   font-weight: 500;
   align-items: center;
   justify-content: space-evenly;
-
 }
 
 .correct {

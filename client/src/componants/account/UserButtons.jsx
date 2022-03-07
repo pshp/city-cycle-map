@@ -5,9 +5,7 @@ import { MyContext } from "../../context";
 const UserButtons = () => {
   const {
     handleRegisterStart,
-    handleRegisterSubmit,
     handleLoginStart,
-    handleLoginSubmit,
     handleLogout,
   } = useContext(MyContext);
 

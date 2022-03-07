@@ -44,7 +44,7 @@ export const editPin = async (id, data) => {
 }
 
 export const newUser = async (data) => {
-  return fetch(baseUrl + "users", {
+  return fetch(baseUrl + "users/signup", {
     method: "POST",
     headers: headers,
     body: JSON.stringify(data),
@@ -52,4 +52,11 @@ export const newUser = async (data) => {
     .then((res) => res.json())
 };
 
-
+export const loginUser = async (data) => {
+  return fetch(baseUrl + "users/login", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+};
