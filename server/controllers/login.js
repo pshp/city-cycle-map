@@ -24,7 +24,7 @@ const login = async (req, res) => {
 
     res.status(200).send({data: validUser._id});
   } catch (e) {
-    res.status(500).send({error: e});
+    res.status(500).send({error: e._message});
   }
 };
 

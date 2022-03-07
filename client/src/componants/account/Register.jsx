@@ -24,6 +24,7 @@ export default function Register() {
 
     newUser(body)
       .then((res) => {
+        if (res.error) throw new Error(res.error);
         setCorrect(true);
         setError(false);
       })

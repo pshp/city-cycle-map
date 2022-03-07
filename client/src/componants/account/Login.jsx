@@ -21,8 +21,8 @@ const Login = () => {
     };
 
     loginUser(body)
-      .then((result) => {
-        if (result.error) throw new Error(result.error);
+      .then((res) => {
+        if (res.error) throw new Error(res.error);
         setCorrect(true);
         setError(false);
       })
