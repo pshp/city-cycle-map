@@ -18,7 +18,7 @@ const login = async (req, res) => {
       return res.status(400).send({ error: 'Wrong username or Password' });
     }
 
-    return res.status(200).send({ data: validUser._id }); // eslint-disable-line
+    return res.status(200).send({ data: {username: validUser.username }}); // eslint-disable-line
   } catch (e) {
     return res.status(500).send({ error: e._message }); // eslint-disable-line
   }

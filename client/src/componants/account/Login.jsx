@@ -6,7 +6,7 @@ import { loginUser } from '../../services/api-service';
 import MyContext from '../../context';
 
 function Login() {
-  const { handleLoginClose } = useContext(MyContext);
+  const { handleLoginClose, handleLoginSubmit } = useContext(MyContext);
   const [correct, setCorrect] = useState(false);
   const [error, setError] = useState(false);
   // const usernameRef = useRef();
@@ -23,8 +23,10 @@ function Login() {
     loginUser(body)
       .then((res) => {
         if (res.error) throw new Error(res.error);
+        // console.log(res);
         setCorrect(true);
         setError(false);
+        handleLoginSubmit(res.data.username);
       })
       .catch((err) => {
         console.log(err);

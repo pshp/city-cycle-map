@@ -4,6 +4,7 @@ import MyContext from '../../context';
 
 function UserButtons() {
   const {
+    currentUser,
     handleRegisterStart,
     handleLoginStart,
     handleLogout,
@@ -11,9 +12,15 @@ function UserButtons() {
 
   return (
     <div className="user-buttons">
+      {currentUser && (
       <button type="button" className="logout" onClick={handleLogout}>Log Out</button>
-      <button type="button" className="login" onClick={handleLoginStart}>LogIn</button>
-      <button type="button" className="register" onClick={handleRegisterStart}>Register</button>
+      )}
+      {!currentUser && (
+      <>
+        <button type="button" className="login" onClick={handleLoginStart}>LogIn</button>
+        <button type="button" className="register" onClick={handleRegisterStart}>Register</button>
+      </>
+      )}
     </div>
   );
 }

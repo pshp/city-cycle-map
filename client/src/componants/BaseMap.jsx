@@ -16,6 +16,8 @@ import Register from './account/Register';
 import Login from './account/Login';
 
 function BaseMap() {
+  const userStorage = window.localStorage;
+  const [currentUser, setCurrentUser] = useState(null);
   const { myMap } = useMap();
   // const [currentUser, setCurrentUser] = useState(null);
   const [currentPinId, setCurrentPinId] = useState(0);
@@ -27,7 +29,13 @@ function BaseMap() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [showRegister, setShowRegister] = useState(false);
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
+
+  useEffect(() => {
+    if (userStorage.user) {
+      setCurrentUser(userStorage.user);
+    }
+  }, []);
 
   useEffect(() => {
     getPins()
@@ -95,8 +103,12 @@ function BaseMap() {
     setShowLogin(!showLogin);
     setShowRegister(false);
   };
-  const handleLoginSubmit = () => {
-    setShowLogin(false);
+  const handleLoginSubmit = (username) => {
+    userStorage.setItem('user', username);
+    setCurrentUser(username);
+    setTimeout(() => {
+      setShowLogin(false);
+    }, 1000);
   };
 
   const handleLoginClose = () => {
@@ -104,12 +116,9 @@ function BaseMap() {
   };
 
   const handleLogout = () => {
-    // (false);
+    localStorage.removeItem('user');
+    setCurrentUser(null);
   };
-
-  // const handleClose = () => {
-  //   setEditPlace(true);
-  // };
 
   const handleClickDelete = () => {
     deletePin(currentPinId)
@@ -139,7 +148,7 @@ function BaseMap() {
     const newPin = {
       longitude: newPlace.lng,
       latitude: newPlace.lat,
-      username: 'empty',
+      username: currentUser,
       title,
       description: desc,
     };
@@ -184,6 +193,7 @@ function BaseMap() {
     }
   };
   const contextStuff = useMemo(() => ({
+    currentUser,
     currentPinId,
     pinClick,
     zoom,
@@ -208,7 +218,17 @@ function BaseMap() {
     handleLoginSubmit,
     handleLoginClose,
     handleLogout,
-  }), [currentPinId, zoom, newPlace, title, desc, showRegister, showLogin]);
+    userStorage,
+  }), [
+    currentUser,
+    currentPinId,
+    zoom,
+    newPlace,
+    title,
+    desc,
+    showRegister,
+    showLogin,
+    userStorage]);
 
   return (
     <MyContext.Provider
@@ -231,11 +251,10 @@ function BaseMap() {
             handleClickAdd(e);
           }}
         >
-          <PinList pinArray={pinArray} />
+          { currentUser && (<PinList pinArray={pinArray} />)}
           <ScaleControl />
           <NavigationControl />
           <UserButtons />
-
           {showRegister && (<Register />)}
           {showLogin && (<Login />)}
 

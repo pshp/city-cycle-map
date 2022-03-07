@@ -8,8 +8,10 @@ import MyContext from '../context';
 
 function InfoBox({ data }) {
   const {
-    handleClickDelete, handleClickEdit, handleClickClose, panMap,
+    currentUser, handleClickDelete, handleClickEdit, handleClickClose, panMap,
   } = useContext(MyContext);
+
+  const usernameStyling = () => ({ color: currentUser === data.username ? 'red' : 'blue' });
 
   return (
     <Popup
@@ -50,7 +52,7 @@ function InfoBox({ data }) {
         <p className="username">
           Created by
           {' '}
-          <b>{data.username}</b>
+          <b style={{ usernameStyling }}>{data.username}</b>
         </p>
         <p className="date">1 hour ago</p>
       </div>
