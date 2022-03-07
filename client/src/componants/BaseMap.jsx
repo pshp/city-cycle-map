@@ -130,9 +130,10 @@ function BaseMap() {
   };
 
   const handleClickAdd = (e) => {
-    setCurrentPinId(null);
     const { lng, lat } = e.lngLat;
     panMap(lng, lat);
+    if (!currentUser) return;
+    setCurrentPinId(null);
     setNewPlace({
       lat,
       lng,
