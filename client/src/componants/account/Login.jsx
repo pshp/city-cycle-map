@@ -6,7 +6,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { MyContext } from "../../context";
 
 const Login = () => {
-
   const { handleLoginClose } = useContext(MyContext);
   const [correct, setCorrect] = useState(false);
   const [error, setError] = useState(false);
@@ -17,13 +16,13 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
-      // username: usernameRef.current.value,
-      // email: emailRef.current.value,
-      // password: passwordRef.current.value,
+      username: e.target.username.value,
+      password: e.target.password.value,
     };
 
     loginUser(body)
-      .then((res) => {
+      .then((result) => {
+        if (result.error) throw new Error(result.error);
         setCorrect(true);
         setError(false);
       })
@@ -36,28 +35,37 @@ const Login = () => {
 
   return (
     <>
-    <div className="login-container">
-      <CloseIcon
-        className="login-close close-button icon-button"
-        onClick={() => handleLoginClose()}
-      />
-      <div className="logo-title">
-        <img className="logo" src={bikeIcon} />
-        <p> &nbsp; &nbsp;Cycle Map Berlin</p>
+      <div className="login-container">
+        <CloseIcon
+          className="login-close close-button icon-button"
+          onClick={() => handleLoginClose()}
+        />
+        <div className="logo-title">
+          <img className="logo" src={bikeIcon} />
+          <p> &nbsp; &nbsp;Cycle Map Berlin</p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="username"
+            autoComplete="off"
+            type="text"
+            placeholder="username"
+          />
+          <input
+            name="password"
+            autoComplete="new-password"
+            type="password"
+            placeholder="password"
+          />
+          <button className="login-button" type="submit">
+            Login
+          </button>
+        </form>
+        {correct && <p className="correct">Success</p>}
+        {error && <p className="error">Wrong username or password</p>}
       </div>
-      <form onSubmit={handleSubmit}>
-        <input autoComplete="off" type="text" placeholder="username" />
-        <input autoComplete="new-password" type="password" placeholder="password" />
-        <button className="login-button" type="submit">
-          Login
-        </button>
-        {correct && <p className="correct">Signup successful! Please log in</p>}
-        {error && <p className="error">Something went wrong...</p>}
-      </form>
-    </div>
     </>
   );
-}
-
+};
 
 export default Login;

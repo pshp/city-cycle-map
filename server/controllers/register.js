@@ -3,16 +3,17 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   try {
-
     // Check is username or email exists
-    const userExists = await User.findOne({ username: req.body.username }).exec();
+    const userExists = await User.findOne({
+      username: req.body.username,
+    }).exec();
     const emailExists = await User.findOne({ email: req.body.email }).exec();
     if (userExists) {
-      res.status(400).send("username is taken");
+      res.status(400).send({ error: "username is taken" });
       return;
     }
     if (emailExists) {
-      res.status(400).send("email is taken");
+      res.status(400).json({ error: "email is taken" });
       return;
     }
 
@@ -27,13 +28,11 @@ const register = async (req, res) => {
       email: req.body.email,
     };
     const user = await User.create(body);
-    
-    res.status(200).send(user._id);
 
+    res.status(200).send({ data: user._id });
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).send({ error: e });
   }
-
 };
 
 module.exports = register;

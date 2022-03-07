@@ -22,26 +22,22 @@ export const postPin = async (data) => {
 
 export const deletePin = async (id) => {
   return fetch(baseUrl + "pins/" + id, {
-    method:"DELETE",
+    method: "DELETE",
     headers: headers,
-  }).then(
-    res => res.json()
-  ).catch(
-    (error) => console.log(error)
-  );
-}
+  })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
 
 export const editPin = async (id, data) => {
   return fetch(baseUrl + "pins/" + id, {
-    method:"PATCH",
+    method: "PATCH",
     headers: headers,
-    body: JSON.stringify(data)
-  }).then(
-    res => res.json()
-  ).catch(
-    (error) => console.log(error)
-  );
-}
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
 
 export const newUser = async (data) => {
   return fetch(baseUrl + "users/signup", {
@@ -50,6 +46,7 @@ export const newUser = async (data) => {
     body: JSON.stringify(data),
   })
     .then((res) => res.json())
+    .catch((error) => console.log(error));
 };
 
 export const loginUser = async (data) => {
@@ -59,4 +56,5 @@ export const loginUser = async (data) => {
     body: JSON.stringify(data),
   })
     .then((res) => res.json())
+    .catch((error) => console.log(error));
 };

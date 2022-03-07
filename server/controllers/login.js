@@ -2,22 +2,29 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
+  console.log("login - server")
+
   try {
     // validate user
     const validUser = await User.findOne({ username: req.body.username });
-    !validUser && res.status(400).send("Wrong Username or password");
+    if (!validUser) {
+      res.status(400).send({error:"Wrong Username or password"});
+      return;
+    }
 
     // validate password
     const validPassword = await bcrypt.compare(
       req.body.password,
       validUser.password
     );
-    !validPassword && res.status(400).send("Wrong username or Password");
+    if (!validPassword) {
+      res.status(400).send({error:"Wrong username or Password"});
+      return;
+    }
 
-    res.status(200).send(validUser._id);
-
+    res.status(200).send({data: validUser._id});
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).send({error: e});
   }
 };
 

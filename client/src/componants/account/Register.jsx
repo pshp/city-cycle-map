@@ -52,9 +52,10 @@ export default function Register() {
         <button className="register-button" type="submit">
           Register
         </button>
-        {correct && <p className="correct">Signup successful! Please log in</p>}
-        {error && <p className="error">Something went wrong...</p>}{" "}
+
       </form>
+      {correct && <p className="correct">Account created. Please log in</p>}
+        {error && <p className="error">Something went wrong...</p>}
     </div>
   );
 }
