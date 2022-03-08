@@ -6,7 +6,8 @@ import ReactMapGL, {
 } from 'react-map-gl';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 import PinList from './PinList';
 import './BaseMap.css';
 import {
@@ -17,7 +18,6 @@ import './Pin.css';
 import UserButtons from './account/UserButtons';
 import Register from './account/Register';
 import Login from './account/Login';
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
 function BaseMap() {
   const userStorage = window.localStorage;
