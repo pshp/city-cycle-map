@@ -1,0 +1,94 @@
+
+
+
+  .sidebar {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    top: 150px;
+    left: 0;
+    padding:20px;
+    overflow: hidden;
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    font-family: 'Lato', sans-serif;
+    color: #404040;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    color: #404040;
+  }
+
+  .heading {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    border-radius:1px;
+    padding: 10px 10px;
+    color:rgba(0,0,0,.5);
+    font-size:18px;
+
+
+  }
+
+  .reports {
+    height: fit-content;
+    overflow: auto;
+    z-index: 6;
+    color:white;
+    padding:0;
+  }
+
+  .reports .item {
+    display: block;
+    border-bottom: 1px solid #eee;
+    padding: 0px 0px 0px 0px;
+    text-decoration: none;
+    font-size:18px;
+    margin:0;
+  }
+
+  .reports .item:last-child {
+    border-bottom: none;
+  }
+
+
+  .clear {
+    color: rgb(77, 207, 73);
+    display: block;
+    font-weight: 1000 !important;
+    font-size:18px !important;
+    margin:20px 0px !important;
+    padding: 0;
+  }
+
+
+  .warning {
+    color: rgb(255, 35, 35);
+    display: block;
+    font-weight: 1000 !important;
+    font-size:18px !important;
+    margin:20px 0px !important;
+    padding: 0;
+  }
+
+
+
+  .reports .item.active {
+    background-color: #f8f8f8;
+  }
+
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-left: 0;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00853e;
+    border-radius: 0;
+  }

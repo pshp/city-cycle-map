@@ -120,14 +120,10 @@ function BaseMap({
     setShowLogin(false);
   };
 
-  const refreshPage = () => {
-    window.location.reload(false);
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('user');
     setCurrentUser(null);
-    refreshPage();
+    window.location.reload(false);
   };
 
   const handleClickDelete = () => {
