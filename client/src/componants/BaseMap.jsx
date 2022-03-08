@@ -3,10 +3,10 @@ import ReactMapGL, {
   useMap,
   ScaleControl,
   NavigationControl,
+
 } from 'react-map-gl';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 import PinList from './PinList';
 import './BaseMap.css';
@@ -19,13 +19,14 @@ import UserButtons from './account/UserButtons';
 import Register from './account/Register';
 import Login from './account/Login';
 
-function BaseMap() {
+function BaseMap({
+  handleClickDirections, latStore, lngStore, zoomStore,
+}) {
   const userStorage = window.localStorage;
   const [currentUser, setCurrentUser] = useState(null);
   const { myMap } = useMap();
-  // const [currentUser, setCurrentUser] = useState(null);
   const [currentPinId, setCurrentPinId] = useState(0);
-  const initialZoom = 11;
+  const initialZoom = zoomStore;
   const [zoom, setZoom] = useState(initialZoom);
   const [pinArray, setPinArray] = useState([]);
   const [newPlace, setNewPlace] = useState(null);
@@ -34,7 +35,6 @@ function BaseMap() {
   const [desc, setDesc] = useState('');
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [showDirections, setShowDirections] = useState(false);
 
   useEffect(() => {
     if (userStorage.user) {
@@ -204,35 +204,6 @@ function BaseMap() {
     }
   };
 
-  const directions = new MapboxDirections({
-    accessToken: process.env.REACT_APP_MAPBOX,
-    unit: 'metric',
-    profile: 'mapbox/cycling',
-    alternatives: true,
-
-    controls: {
-      profileSwitcher: false,
-      instructions: false,
-    },
-
-  });
-
-  const addNav = () => {
-    myMap.addControl(directions, 'top-left');
-    setShowDirections(true);
-  };
-
-  const removeNav = () => {
-    myMap.removeControl(directions);
-    setShowDirections(false);
-  };
-
-  const handleClickDirections = () => {
-    console.log(showDirections);
-    if (!showDirections) addNav();
-    else if (showDirections) removeNav();
-  };
-
   const contextStuff = useMemo(() => ({
     currentUser,
     currentPinId,
@@ -279,8 +250,8 @@ function BaseMap() {
         <ReactMapGL
           id="myMap"
           initialViewState={{
-            longitude: 13.405,
-            latitude: 52.52,
+            longitude: lngStore,
+            latitude: latStore,
             zoom: initialZoom,
           }}
           style={{ width: '100vw', height: '100vh' }}
@@ -304,7 +275,6 @@ function BaseMap() {
           <UserButtons />
           {showRegister && (<Register />)}
           {showLogin && (<Login />)}
-
         </ReactMapGL>
       </div>
     </MyContext.Provider>

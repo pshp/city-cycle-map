@@ -54,7 +54,7 @@ function InfoBox({ data }) {
           {' '}
           <b style={{ usernameStyling }}>{data.username}</b>
         </p>
-        <p className="date">1 hour ago</p>
+        {/* <p className="date">1 hour ago</p> */}
       </div>
     </Popup>
   );
